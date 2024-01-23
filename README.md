@@ -23,7 +23,7 @@ cssclasses: jfont
 Список допустимые значения:
 - jfont - Knitting Symbols by CET
 - kauri - Kauri Knits
-- kauri3 - Kauri Knits sans borders
+- kauri2 - Kauri Knits sans borders
 
 ~~~markdown
 ```knitting
