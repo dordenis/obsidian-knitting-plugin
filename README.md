@@ -2,6 +2,14 @@
 
 Плагин для отрисовки схем вязания
 
+## Режи редактирования
+
+![mode-edit](doc/mode-edit.png)
+
+## Режи просмотра
+
+![mode-view](doc/mode-view.png)
+
 ## Install
 - в папке `.obsidian/plugins` создайте `knitting`
 - в эту папку перенестите три файла из [releases](https://github.com/dordenis/obsidian-knitting-plugin/releases): 
