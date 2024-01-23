@@ -73,10 +73,13 @@
 table.knitting td {
 	text-align: center;
 	min-width: 0;
+	font-weight: bold;
+	padding: 1px;
 }
 
 table.knitting td.title {
 	font-family: var(--font-monospace);
-	font-weight: bold;
+	font-size: x-small;
+	padding: 3px;
 }
 

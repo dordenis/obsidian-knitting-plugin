@@ -2,11 +2,11 @@
 
 Плагин для отрисовки схем вязания
 
-## Режи редактирования
+## Edit mode
 
 ![mode-edit](doc/mode-edit.png)
 
-## Режи просмотра
+## Mode view
 
 ![mode-view](doc/mode-view.png)
 
