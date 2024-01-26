@@ -1,7 +1,7 @@
 import {parseYaml, Plugin} from "obsidian";
 import {Knitting} from "./knitting";
 import {DEFAULT_SETTINGS, Settings} from "./settings";
-import {Obj} from "tern";
+import {knittingEdit} from "./edit";
 
 export default class KnittingPlugin extends Plugin {
 
@@ -11,6 +11,9 @@ export default class KnittingPlugin extends Plugin {
 		console.log("Load knitting plugin")
 
 		await this.loadSettings()
+
+		this.registerEditorExtension(knittingEdit);
+
 
 		this.registerMarkdownCodeBlockProcessor("knitting",   async (source, el, ctx) => {
 			const settings: Settings = await this.getSettings(source)
