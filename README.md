@@ -2,12 +2,6 @@
 
 Плагин для отрисовки схем вязания
 
-## Edit mode
-
-![mode-edit](doc/mode-edit.png)
-
-## Mode view
-
 ![mode-view](doc/mode-view.png)
 
 ## Install
@@ -20,23 +14,29 @@
 
 ## Uses
 
-В заметку для схемы вязания добавтьте заголовок
 
 ~~~markdown
+```knitting
+style: jfont
+colors: j-red, b-green
 ---
-cssclasses: jfont
----
+ggggjbjgggjbjgggg 
+gggj|g\jgj|g\jggg
+gjbj|g\jbj|g\jbjg
+j|g\jgj|g\jgj|g\j
+jgggj|ggggg\jgggj
+\jgj|ggggggg\jgj|
+gjbj|ggggggg\jbjg
+j|g\jgggggggj|g\j
+jgggjbjgggjbjgggj
+\jgj|g\jgj|g\jgj|
+gg\jgggjbjgggj|gg
+ggg\jgj|g\jgj|ggg
+```
 ~~~
 
-Список допустимые значения:
+Список допустимых значений **style**:
 - jfont - Knitting Symbols by CET
 - kauri - Kauri Knits
 - kauri2 - Kauri Knits sans borders
 
-~~~markdown
-```knitting
-
-Ваша схема
-
-```
-~~~
