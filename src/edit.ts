@@ -82,11 +82,7 @@ class KnittingEdit implements PluginValue {
 						}
 					}
 
-					console.log(type.name, isKnittingBlock, line, startLine)
-
 					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock && line>startLine) {
-						console.log("sdf")
-
 						const deco = Decoration.replace({
 							widget: new KnittingWidget(context, style)
 						});
