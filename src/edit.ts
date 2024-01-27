@@ -11,7 +11,7 @@ import {
 import {DEFAULT_SETTINGS} from "./settings";
 
 
-const wrapper = (style) => Decoration.line({
+const wrapper = (style: string | undefined) => Decoration.line({
 	attributes: {class: `knitting-line ${style}`}
 })
 
@@ -35,8 +35,8 @@ class KnittingEdit implements PluginValue {
 		const builder = new RangeSetBuilder<Decoration>();
 
 		let isKnittingBlock: boolean
-		let startLine: number|undefined
-		let style: string = DEFAULT_SETTINGS.style
+		let startLine: number | undefined
+		let style: string | undefined = DEFAULT_SETTINGS.style
 
 		for (const {from, to} of view.visibleRanges) {
 			const tree = syntaxTree(view.state)

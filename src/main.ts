@@ -1,7 +1,7 @@
 import {parseYaml, Plugin} from "obsidian";
 import {Knitting} from "./knitting";
 import {DEFAULT_SETTINGS, Settings} from "./settings";
-import {knittingEdit, showStripes} from "./edit";
+import {knittingEdit} from "./edit";
 
 export default class KnittingPlugin extends Plugin {
 
