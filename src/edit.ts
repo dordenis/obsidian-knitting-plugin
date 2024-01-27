@@ -1,34 +1,19 @@
 import { syntaxTree } from "@codemirror/language";
-import { RangeSetBuilder } from "@codemirror/state";
+import {RangeSetBuilder} from "@codemirror/state";
 import {
 	Decoration,
 	DecorationSet,
 	EditorView,
-	PluginSpec,
 	PluginValue,
 	ViewPlugin,
 	ViewUpdate,
-	WidgetType,
 } from "@codemirror/view";
 import {DEFAULT_SETTINGS} from "./settings";
 
-class KnittingWidget extends WidgetType {
-	context: string;
-	style: string
 
-	constructor(context: string, style: string) {
-		super();
-		this.context = context
-		this.style = style
-	}
-
-	toDOM() {
-		const el = document.createElement('span');
-		el.className = `knitting-line ${this.style}`;
-		el.textContent = this.context;
-		return el;
-	}
-}
+const wrapper = (style) => Decoration.line({
+	attributes: {class: `knitting-line ${style}`}
+})
 
 class KnittingEdit implements PluginValue {
 
@@ -48,6 +33,7 @@ class KnittingEdit implements PluginValue {
 
 	buildDecorations(view: EditorView) {
 		const builder = new RangeSetBuilder<Decoration>();
+
 		let isKnittingBlock: boolean
 		let startLine: number|undefined
 		let style: string = DEFAULT_SETTINGS.style
@@ -82,11 +68,8 @@ class KnittingEdit implements PluginValue {
 						}
 					}
 
-					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock && line>startLine) {
-						const deco = Decoration.replace({
-							widget: new KnittingWidget(context, style)
-						});
-						builder.add(from, to, deco);
+					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock && line > startLine) {
+						builder.add(from, from, wrapper(style))
 					}
 				}
 			})
@@ -96,11 +79,8 @@ class KnittingEdit implements PluginValue {
 	}
 }
 
-const pluginSpec: PluginSpec<KnittingEdit> = {
-	decorations: (value: KnittingEdit) => value.decorations,
-};
-
 export const knittingEdit = ViewPlugin.fromClass(
-	KnittingEdit,
-	pluginSpec
-);
+	KnittingEdit, {
+		decorations: v => v.decorations
+	}
+)

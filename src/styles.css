@@ -39,8 +39,6 @@ table.knitting.kauri,
 }
 
 table.knitting.kauri td {
-	padding: 0;
-	margin: 0;
 	border: none;
 }
 
@@ -50,8 +48,6 @@ table.knitting.kauri2,
 }
 
 table.knitting.kauri2 td {
-	padding: 0;
-	margin: 0;
 	border: none;
 }
 
@@ -59,13 +55,13 @@ table.knitting td {
 	text-align: center;
 	min-width: 0;
 	font-weight: bold;
-	padding: 1px;
+	padding: 0;
+	margin: 0;
 }
 
 table.knitting td.title {
 	font-family: var(--font-monospace);
 	font-size: x-small;
-	padding: 3px;
 }
 
 .markdown-rendered table.knitting td.bg {
