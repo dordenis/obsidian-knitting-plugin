@@ -84,10 +84,14 @@ class KnittingEdit implements PluginValue {
 					}
 
 					if (isKnittingBlock && node.type.name.startsWith("hmd-codeblock") && context.startsWith("colors:")) {
-						[...context.matchAll(new RegExp(/<(\w+)>/, 'gi'))].forEach(m => {
+						[...context.matchAll(new RegExp(/ *(\w+)[ -]+/, 'gi'))].forEach(m => {
+
+							const n = node.from + m.index + m[0].indexOf(m[1])
+							console.log(m)
+							console.log(n)
 							builder.add(
-								node.from + m.index,
-								node.from + m.index + m[0].length,
+								n,
+								n + m[1].length,
 								Decoration.replace({
 									widget: new KnittingWidget(m[1], style),
 								})

@@ -48,7 +48,7 @@ export default class KnittingPlugin extends Plugin {
 
 		colors.split(",").forEach(s => {
 			const res = s.split("-")
-			result[res[0].replace(/[<>]/ig, '').trim()] = res[1].trim()
+			result[res[0].trim()] = res[1].trim()
 		})
 		return result
 	}

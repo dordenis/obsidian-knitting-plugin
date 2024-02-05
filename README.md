@@ -21,7 +21,7 @@
 ~~~markdown
 ```knitting
 style: jfont
-colors: <j>-red, <b>-green
+colors: j-red, b-green
 ---
 ggggjbjgggjbjgggg 
 gggj|g\jgj|g\jggg
