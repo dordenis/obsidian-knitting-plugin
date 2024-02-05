@@ -4,6 +4,8 @@
 
 ![mode-view](doc/mode-view.png)
 
+![mode-view](doc/mode-edit.png)
+
 ## Install
 - в папке `.obsidian/plugins` создайте `knitting`
 - в эту папку перенестите три файла из [releases](https://github.com/dordenis/obsidian-knitting-plugin/releases): 
@@ -14,11 +16,12 @@
 
 ## Uses
 
+Скопируйте и вставьте нижеследующий блок
 
 ~~~markdown
 ```knitting
 style: jfont
-colors: j-red, b-green
+colors: <j>-red, <b>-green
 ---
 ggggjbjgggjbjgggg 
 gggj|g\jgj|g\jggg

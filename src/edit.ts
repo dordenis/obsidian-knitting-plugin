@@ -1,5 +1,5 @@
 import { syntaxTree } from "@codemirror/language";
-import {RangeSetBuilder} from "@codemirror/state";
+import { RangeSetBuilder } from "@codemirror/state";
 import {
 	Decoration,
 	DecorationSet,
@@ -7,16 +7,33 @@ import {
 	PluginValue,
 	ViewPlugin,
 	ViewUpdate,
+	WidgetType,
 } from "@codemirror/view";
 import {DEFAULT_SETTINGS} from "./settings";
-
 
 const wrapper = (style: string | undefined) => Decoration.line({
 	attributes: {class: `knitting-line ${style}`}
 })
 
-class KnittingEdit implements PluginValue {
+class KnittingWidget extends WidgetType {
+	context: string;
+	style: string
 
+	constructor(context: string, style: string) {
+		super();
+		this.context = context
+		this.style = style
+	}
+
+	toDOM(view: EditorView): HTMLElement {
+		const el = document.createElement("span");
+		el.className = `cm-hmd-codeblock knitting-line ${this.style}`
+		el.textContent = this.context;
+		return el;
+	}
+}
+
+class KnittingEdit implements PluginValue {
 	decorations: DecorationSet;
 
 	constructor(view: EditorView) {
@@ -29,38 +46,36 @@ class KnittingEdit implements PluginValue {
 		}
 	}
 
-	destory() {}
+	destroy() {}
 
-	buildDecorations(view: EditorView) {
+	buildDecorations(view: EditorView): DecorationSet {
 		const builder = new RangeSetBuilder<Decoration>();
 
-		let isKnittingBlock: boolean
-		let startLine: number | undefined
-		let style: string | undefined = DEFAULT_SETTINGS.style
+		let isKnittingBlock = false
+		let startLine: number | undefined = undefined
+		let style = DEFAULT_SETTINGS.style
 
-		for (const {from, to} of view.visibleRanges) {
+		for (const { from, to } of view.visibleRanges) {
 			const tree = syntaxTree(view.state)
 
 			tree.iterate({
 				from, to,
-				// @ts-ignore
-				enter: ({type, from, to}) => {
+				enter: function (node) {
 
-					const context = view.state.doc.lineAt(from).text
-					const line = view.state.doc.lineAt(from).number
+					const context = view.state.doc.lineAt(node.from).text
+					const line = view.state.doc.lineAt(node.from).number
 
-					if (type.name.startsWith("formatting_formatting-code-block")) {
+
+					if (node.type.name.startsWith("formatting_formatting-code-block")) {
 						isKnittingBlock = context.startsWith("```knitting")
 						startLine = undefined
 					}
 
-					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock) {
-						if (context.startsWith("---")) {
-							startLine = line
-						}
+					if (context.startsWith("---") && isKnittingBlock) {
+						startLine = line
 					}
 
-					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock) {
+					if (context.startsWith("style") && isKnittingBlock) {
 						const regext = /style: +(\w+)/im
 						const match = regext.exec(context)
 						if (match && match[1]) {
@@ -68,11 +83,23 @@ class KnittingEdit implements PluginValue {
 						}
 					}
 
-					if (type.name.startsWith("hmd-codeblock") && isKnittingBlock && line > startLine) {
-						builder.add(from, from, wrapper(style))
+					if (isKnittingBlock && node.type.name.startsWith("hmd-codeblock") && context.startsWith("colors:")) {
+						[...context.matchAll(new RegExp(/<(\w+)>/, 'gi'))].forEach(m => {
+							builder.add(
+								node.from + m.index,
+								node.from + m.index + m[0].length,
+								Decoration.replace({
+									widget: new KnittingWidget(m[1], style),
+								})
+							);
+						})
 					}
-				}
-			})
+
+					if (isKnittingBlock && node.type.name.startsWith("hmd-codeblock") && line > startLine) {
+						builder.add(node.from, node.from, wrapper(style))
+					}
+				},
+			});
 		}
 
 		return builder.finish();
@@ -83,4 +110,4 @@ export const knittingEdit = ViewPlugin.fromClass(
 	KnittingEdit, {
 		decorations: v => v.decorations
 	}
-)
+);
